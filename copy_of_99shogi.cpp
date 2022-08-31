@@ -209,7 +209,7 @@ string komaKind(int i, int j) {
 }
 
 void keTobi(int i, int j, int s) {
-	if(board[i][j] > 0) {
+	if(board(i)[j] > 0) {
 		if(i-2 >= 0) {
 			flag = 0;
 			if(j-1 >= 0) {
@@ -244,7 +244,7 @@ void keTobi(int i, int j, int s) {
 		}
 	}
 	
-	if(board[i][j] < 0) {
+	if(board(i)[j] < 0) {
 		if(i+2 <= 9) {
 			flag = 0;
 			if(j-1 >= 0) {
@@ -313,7 +313,7 @@ void above(int i, int j, int s) {
 
 	if(board(i)[j] < 0) {
 		if(i+s < 9) {
-			//if(board[i+s][j] >= 0) {
+			//if(board(i+s)[j] >= 0) {
 				if(board(i+s)[j] != 0) {
 						special_flag1++;
 						flag++;
@@ -416,14 +416,14 @@ void right(int i, int j, int s) {
 				if(board(i)[j+s] < 0) {
 					stop++;
 				}
-				if(board[i][j+s] > 0) {
+				if(board(i)[j+s] > 0) {
 					sstop++;
 				}
 			}
 		}
 	}
 
-	if(board[i][j] < 0) {
+	if(board(i)[j] < 0) {
 		if(j+s < 9) {
 			if(board(i)[j+s] != 0) {
 						flag++;
@@ -467,9 +467,9 @@ void left(int i, int j, int s) {
 			//cout<<"flag = "<<flag<<endl;
 			if(board(i)[j-s] <= 0) {
 				/*if(flag < 2) {
-					cout<<board[7][1]<<endl;
+					cout<<board(7)[1]<<endl;
 					cout<<"board["<<i<<"]["<<j-s<<"]"<<endl;
-					cout<<board[i][j-s]<<endl;
+					cout<<board(i)[j-s]<<endl;
 				}*/
 				for(int n = 0; n < 100; n++) {
 					if(te[n].empty() == 1 && flag < 2 && special_flag2 == 0/* && ff == 0*/) {
@@ -987,7 +987,7 @@ void sop() {
 				string moKoma = te[r].erase(0, 4);
 
 				cout<<endl<<"White >"<<9-a<<b+1<<9-c<<d+1<<moKoma<<endl;
-				board(d)[c] = board[b][a];
+				board(d)[c] = board(b)[a];
 				board(b)[a] = 0;
 				
 				//wc++;
@@ -1183,7 +1183,7 @@ void gameRule() {
 					}while(s <= 8 && stop == 0 && sstop == 0);
 					break;
 				case shi:
-					//cout<<"@"<<board[i][j]<<"@"<<endl;
+					//cout<<"@"<<board(i)[j]<<"@"<<endl;
 					special_flag2 = 0;
 					flag = 0;
 					s = 1;
@@ -1371,7 +1371,7 @@ void gameRule() {
 			/*
 			for(int n = 0; i < 10; n++) {
 				if(eKoma[n].empty() == 0) {
-					if(board[i][j] == 0) {
+					if(board(i)[j] == 0) {
 						for(int p = 0; n < 100; p++) {
 							if(te[p].empty() != 0) {
 								te[p] = to_string(9000 + 900 + 10 * j + i) + eKoma[n];
@@ -1496,7 +1496,7 @@ void ekoma() {
 			kc = 0;
 			for(int i = 0; i < 9; i++) {
 				for(int j = 0; j < 9; j++) {
-					if(board[i][j] == 0) {
+					if(board(i)[j] == 0) {
 						flag = 0;
 						while(flag == 0) {
 							if(ekomate[kc].empty() != 0) {
@@ -1631,7 +1631,7 @@ void enifu() {
 			if(9-a == 0) {
 				//cout<<"ok\n";
 				for(int j = 0; j < 9; j++) {
-					if(board[j][c] == efu && koma == "FU") {
+					if(board(j)[c] == efu && koma == "FU") {
 						ekomate[i] = "";
 					}
 				}
