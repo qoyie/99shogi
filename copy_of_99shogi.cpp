@@ -13,33 +13,33 @@ using namespace std;
 enum {
 	emp = 0,
 	sfu = 1,
-    sky = 2,
-    ske = 3,
+	sky = 2,
+	ske = 3,
 	sgi = 4,
 	ski = 5,
 	ska = 6,
 	shi = 7,
 	sto = 8,
-    sny = 9,
-    snk = 10,
+	sny = 9,
+	snk = 10,
 	sng = 11,
 	sum = 12,
 	sry = 13,
 	sgy = 14,
-    efu = -1,
-    eky = -2,
-    eke = -3,
-    egi = -4,
-    eki = -5,
-    eka = -6,
-    ehi = -7,
-    eto = -8,
-    eny = -9,
-    enk = -10,
-    eng = -11,
-    eum = -12,
-    ery = -13,
-    egy = -14,
+	efu = -1,
+	eky = -2,
+	eke = -3,
+	egi = -4,
+	eki = -5,
+	eka = -6,
+	ehi = -7,
+	eto = -8,
+	eny = -9,
+	enk = -10,
+	eng = -11,
+	eum = -12,
+	ery = -13,
+	egy = -14,
 };
 
 string FU = "FU";
@@ -58,15 +58,15 @@ string RY = "RY";
 string GY = "GY";
 
 int board[9][9] = {
-    {eky, eke, egi, eki, egy, eki, egi, eke, eky},
-    {emp, ehi, emp, emp, emp, emp, emp, eka, emp},
-    {efu, efu, efu, efu, efu, efu, efu, efu, efu},
-    {emp, emp, emp, emp, emp, emp, emp, emp, emp},
-    {emp, emp, emp, emp, emp, emp, emp, emp, emp},
-    {emp, emp, emp, emp, emp, emp, emp, emp, emp},
-    {sfu, sfu, sfu, sfu, sfu, sfu, sfu, sfu, sfu},
-    {emp, ska, emp, emp, emp, emp, emp, shi, emp},
-    {sky, ske, sgi, ski, sgy, ski, sgi, ske, sky},
+	{eky, eke, egi, eki, egy, eki, egi, eke, eky},
+	{emp, ehi, emp, emp, emp, emp, emp, eka, emp},
+	{efu, efu, efu, efu, efu, efu, efu, efu, efu},
+	{emp, emp, emp, emp, emp, emp, emp, emp, emp},
+	{emp, emp, emp, emp, emp, emp, emp, emp, emp},
+	{emp, emp, emp, emp, emp, emp, emp, emp, emp},
+	{sfu, sfu, sfu, sfu, sfu, sfu, sfu, sfu, sfu},
+	{emp, ska, emp, emp, emp, emp, emp, shi, emp},
+	{sky, ske, sgi, ski, sgy, ski, sgi, ske, sky},
 };
 
 string te[100];
@@ -110,29 +110,29 @@ void draw() {
 			switch(board[i][j]) {
 				case emp: cout<<" * "; break;
 				case sfu: cout<<"+歩"; break;
-                case sky: cout<<"+香"; break;
-                case ske: cout<<"+桂"; break;
+				case sky: cout<<"+香"; break;
+				case ske: cout<<"+桂"; break;
 				case sgi: cout<<"+銀"; break;
 				case ski: cout<<"+金"; break;
 				case ska: cout<<"+角"; break;
 				case shi: cout<<"+飛"; break;
 				case sto: cout<<"+と"; break;
-                case sny: cout<<"+杏"; break;
-                case snk: cout<<"+圭"; break;
+				case sny: cout<<"+杏"; break;
+				case snk: cout<<"+圭"; break;
 				case sng: cout<<"+全"; break;
 				case sum: cout<<"+馬"; break;
 				case sry: cout<<"+竜"; break;
 				case sgy: cout<<"+玉"; break;
 				case efu: cout<<"-歩"; break;
-                case eky: cout<<"-香"; break;
-                case eke: cout<<"-桂"; break;
+				case eky: cout<<"-香"; break;
+				case eke: cout<<"-桂"; break;
 				case egi: cout<<"-銀"; break;
 				case eki: cout<<"-金"; break;
 				case eka: cout<<"-角"; break;
 				case ehi: cout<<"-飛"; break;
 				case eto: cout<<"-と"; break;
-                case eny: cout<<"-杏"; break;
-                case enk: cout<<"-圭"; break;
+				case eny: cout<<"-杏"; break;
+				case enk: cout<<"-圭"; break;
 				case eng: cout<<"-全"; break;
 				case eum: cout<<"-馬"; break;
 				case ery: cout<<"-竜"; break;
@@ -148,11 +148,11 @@ int komaBoard(string koma) {
 	if(koma == "FU") {
 		//cout<<"eureka"<<endl;
 		return sfu;
-    }else if(koma == "KY") {
-        return sky;
-    }else if(koma == "KE") {
-        return ske;
-    }else if(koma == "GI") {
+	}else if(koma == "KY") {
+		return sky;
+	}else if(koma == "KE") {
+		return ske;
+	}else if(koma == "GI") {
 		return sgi;
 	}else if(koma == "KI") {
 		return ski;
@@ -162,11 +162,11 @@ int komaBoard(string koma) {
 		return shi;
 	}else if(koma == "TO") {
 		return sfu;
-    }else if(koma == "NY") {
-        return sny;
-    }else if(koma == "NK") {
-        return snk;
-    }else if(koma == "NG") {
+	}else if(koma == "NY") {
+		return sny;
+	}else if(koma == "NK") {
+		return snk;
+	}else if(koma == "NG") {
 		return sgi;
 	}else if(koma == "UM") {
 		return ska;
@@ -182,10 +182,10 @@ int komaOp(string koma) {
 	if(koma == "FU") {
 		return efu;
 	}else if(koma == "KY") {
-        return eky;
-    }else if(koma == "KE") {
-        return eke;
-    }else if(koma == "GI") {
+		return eky;
+	}else if(koma == "KE") {
+		return eke;
+	}else if(koma == "GI") {
 		return egi;
 	}else if(koma == "KI") {
 		return eki;
@@ -196,10 +196,10 @@ int komaOp(string koma) {
 	}else if(koma == "TO") {
 		return eto;
 	}else if(koma == "NY") {
-        return eny;
-    }else if(koma == "NK") {
-        return enk;
-    }else if(koma == "NG") {
+		return eny;
+	}else if(koma == "NK") {
+		return enk;
+	}else if(koma == "NG") {
 		return eng;
 	}else if(koma == "UM") {
 		return eum;
@@ -214,11 +214,11 @@ int komaOp(string koma) {
 string nariKind(string koma) {
 	if(koma == "FU") {
 		return "TO";
-    }else if(koma == "KY") {
-        return "NY";
-    }else if(koma == "KE") {
-        return "NK";
-    }else if(koma == "GI") {
+	}else if(koma == "KY") {
+		return "NY";
+	}else if(koma == "KE") {
+		return "NK";
+	}else if(koma == "GI") {
 		return "NG";
 	}else if(koma == "KA") {
 		return "UM";
@@ -234,12 +234,12 @@ string komaKind(int i, int j) {
 		case sfu:
 		case efu:
 			return FU; break;
-        case sky:
-        case eky:
-            return KY; break;
-        case ske:
-        case eke:
-            return KE; break;
+		case sky:
+		case eky:
+			return KY; break;
+		case ske:
+		case eke:
+			return KE; break;
 		case sgi:
 		case egi:
 			return GI; break;
@@ -273,75 +273,75 @@ string komaKind(int i, int j) {
 }
 
 void keTobi(int i, int j, int s) {
-    if(board[i][j] > 0) {
-        if(i-2 >= 0) {
-        	flag = 0;
-            if(j-1 >= 0) {
-                if(board[i-2][j-1] != 0) {
-                            flag++;
-                }
-                if(board[i-2][j-1] > 0) {
-                            flag++;
-                }
-                for(int n = 0; n < 100; n++) {
-                    if(te[n].empty() != 0 && flag < 2) {
-                        te[n] = to_string(1000 * j + 100 * i + 10 * (j-1) + i-2) + komaKind(i, j);
-                        break;
-                    }
-                }
-            }
-            flag = 0;
-            if(j+1 <= 9) {
-                if(board[i-2][j+1] != 0) {
-                            flag++;
-                }
-                if(board[i-2][j+1] > 0) {
-                            flag++;
-                }
-                for(int n = 0; n < 100; n++) {
-                    if(te[n].empty() != 0 && flag < 2) {
-                        te[n] = to_string(1000 * j + 100 * i + 10 * (j+1) + i-2) + komaKind(i, j);
-                        break;
-                    }
-                }
-            }
-        }
-    }
-    
-    if(board[i][j] < 0) {
-        if(i+2 <= 9) {
-        	flag = 0;
-            if(j-1 >= 0) {
-                if(board[i+2][j-1] != 0) {
-                            flag++;
-                }
-                if(board[i+2][j-1] < 0) {
-                            flag++;
-                }
-                for(int n = 0; n < sizeof(te[100]); n++) {
-                    if(ete[n].empty() != 0 && flag < 2) {
-                        ete[n] = to_string(1000 * j + 100 * i + 10 * (j-1) + i+2) + komaKind(i, j);
-                        break;
-                    }
-                }
-            }
-            flag = 0;
-            if(j+1 <= 9) {
-                if(board[i+2][j+1] != 0) {
-                            flag++;
-                }
-                if(board[i+2][j+1] < 0) {
-                            flag++;
-                }
-                for(int n = 0; n < sizeof(te[100]); n++) {
-                    if(ete[n].empty() != 0 && flag < 2) {
-                        ete[n] = to_string(1000 * j + 100 * i + 10 * (j+1) + i+2) + komaKind(i, j);
-                        break;
-                    }
-                }
-            }
-        }
-    }
+	if(board[i][j] > 0) {
+		if(i-2 >= 0) {
+			flag = 0;
+			if(j-1 >= 0) {
+				if(board[i-2][j-1] != 0) {
+							flag++;
+				}
+				if(board[i-2][j-1] > 0) {
+							flag++;
+				}
+				for(int n = 0; n < 100; n++) {
+					if(te[n].empty() != 0 && flag < 2) {
+						te[n] = to_string(1000 * j + 100 * i + 10 * (j-1) + i-2) + komaKind(i, j);
+						break;
+					}
+				}
+			}
+			flag = 0;
+			if(j+1 <= 9) {
+				if(board[i-2][j+1] != 0) {
+							flag++;
+				}
+				if(board[i-2][j+1] > 0) {
+							flag++;
+				}
+				for(int n = 0; n < 100; n++) {
+					if(te[n].empty() != 0 && flag < 2) {
+						te[n] = to_string(1000 * j + 100 * i + 10 * (j+1) + i-2) + komaKind(i, j);
+						break;
+					}
+				}
+			}
+		}
+	}
+	
+	if(board[i][j] < 0) {
+		if(i+2 <= 9) {
+			flag = 0;
+			if(j-1 >= 0) {
+				if(board[i+2][j-1] != 0) {
+							flag++;
+				}
+				if(board[i+2][j-1] < 0) {
+							flag++;
+				}
+				for(int n = 0; n < sizeof(te[100]); n++) {
+					if(ete[n].empty() != 0 && flag < 2) {
+						ete[n] = to_string(1000 * j + 100 * i + 10 * (j-1) + i+2) + komaKind(i, j);
+						break;
+					}
+				}
+			}
+			flag = 0;
+			if(j+1 <= 9) {
+				if(board[i+2][j+1] != 0) {
+							flag++;
+				}
+				if(board[i+2][j+1] < 0) {
+							flag++;
+				}
+				for(int n = 0; n < sizeof(te[100]); n++) {
+					if(ete[n].empty() != 0 && flag < 2) {
+						ete[n] = to_string(1000 * j + 100 * i + 10 * (j+1) + i+2) + komaKind(i, j);
+						break;
+					}
+				}
+			}
+		}
+	}
 }
 
 int special_flag1;
@@ -515,35 +515,35 @@ void right(int i, int j, int s) {
 }
 
 void left(int i, int j, int s) {
-    //cout<<"flag = "<<flag<<endl;
+	//cout<<"flag = "<<flag<<endl;
 	if(board[i][j] > 0 && ff == 0) {
 		if(j-s >= 0) {
 			if(board[i][j-s] != 0) { //!
-		    	flag++;
+				flag++;
 			}
 			if(board[i][j-s] > 0) {
 				special_flag2++;
-		    	flag++;
+				flag++;
 			}
-            /*if(flag == 2) {
-                ff = 1;
-            }*/
-            //cout<<"flag = "<<flag<<endl;
-            if(board[i][j-s] <= 0) {
-                /*if(flag < 2) {
-                    cout<<board[7][1]<<endl;
-                    cout<<"board["<<i<<"]["<<j-s<<"]"<<endl;
-                    cout<<board[i][j-s]<<endl;
-                }*/
+			/*if(flag == 2) {
+				ff = 1;
+			}*/
+			//cout<<"flag = "<<flag<<endl;
+			if(board[i][j-s] <= 0) {
+				/*if(flag < 2) {
+					cout<<board[7][1]<<endl;
+					cout<<"board["<<i<<"]["<<j-s<<"]"<<endl;
+					cout<<board[i][j-s]<<endl;
+				}*/
 				for(int n = 0; n < 100; n++) {
 					if(te[n].empty() == 1 && flag < 2 && special_flag2 == 0/* && ff == 0*/) {
 						te[n] = to_string(1000 * j + 100 * i + 10 * (j-s) + i) + komaKind(i, j);
-                        break;
+						break;
 					}
 				}
-                /*te[90] = to_string(1000 * j + 100 * i + 10 * (j-s) + i) + komaKind(i, j);
-                return;*/
-                if(board[i][j-s] < 0) {
+				/*te[90] = to_string(1000 * j + 100 * i + 10 * (j-s) + i) + komaKind(i, j);
+				return;*/
+				if(board[i][j-s] < 0) {
 					stop++;
 				}
 				if(board[i][j-s] > 0) {
@@ -862,13 +862,13 @@ void op() {
 	//d -= 1;
 
 	if(tt.substr(0, 1) != "0" && tt.substr(1, 2) != "0") {
-        a = x / 1000;
-        b = (x % 1000) /100;
-        c = (x % 100) / 10;
-        d = x % 10;
-        
-        b -= 1;
-        d -= 1;
+		a = x / 1000;
+		b = (x % 1000) /100;
+		c = (x % 100) / 10;
+		d = x % 10;
+		
+		b -= 1;
+		d -= 1;
 		while(f == 0) {
 			if((a + e) == 9) {
 				a = e;
@@ -885,37 +885,37 @@ void op() {
 			}
 			e++;
 		}
-        i = d;
-        j = c;
-        ekoma(i, j);
-        
-        board[d][c] = komaOp(koma);
-        board[b][a] = 0;
-    }else {
-        a = x / 1000;
-        b = (x % 1000) /100;
-        c = (x % 100) / 10;
-        d = x % 10;
-        
-        b -= 1;
-        d -= 1;
-        
-        e = 0;
-        f = 0;
-        while(f == 0) {
-            if((c + e) == 9) {
-                c = e;
-                f++;
-            }
-            e++;
-        }
-        
-        i = d;
-        j = c;
-        ekoma(i, j);
-        
-        board[d][c] = komaOp(koma);
-    }
+		i = d;
+		j = c;
+		ekoma(i, j);
+		
+		board[d][c] = komaOp(koma);
+		board[b][a] = 0;
+	}else {
+		a = x / 1000;
+		b = (x % 1000) /100;
+		c = (x % 100) / 10;
+		d = x % 10;
+		
+		b -= 1;
+		d -= 1;
+		
+		e = 0;
+		f = 0;
+		while(f == 0) {
+			if((c + e) == 9) {
+				c = e;
+				f++;
+			}
+			e++;
+		}
+		
+		i = d;
+		j = c;
+		ekoma(i, j);
+		
+		board[d][c] = komaOp(koma);
+	}
 
 	/*i = d;
 	j = c;
@@ -1139,27 +1139,27 @@ void gameRule() {
 					s = 1;
 					flag = 0;
 					above(i, j, s); break;
-                case sky:
-                case eky:
-                //cout<<"ok with "<<i<<j<<"\n";
-                	special_flag2 = 0;
-                	special_flag1 = 0;
-                    flag = 0;
-                    s = 1;
-                    stop = 0;
-                    sstop = 0;
-                    do {
-                    	flag = 0;
-                        above(i, j, s);
-                        ++s;
-                    }while(s <= 8 && stop == 0 && sstop == 0);
-                    break;
-                case ske:
-                case eke:
-                	special_flag2 = 0;
-                    s = 1;
-                    flag = 0;
-                    keTobi(i, j, s); break;
+				case sky:
+				case eky:
+				//cout<<"ok with "<<i<<j<<"\n";
+					special_flag2 = 0;
+					special_flag1 = 0;
+					flag = 0;
+					s = 1;
+					stop = 0;
+					sstop = 0;
+					do {
+						flag = 0;
+						above(i, j, s);
+						++s;
+					}while(s <= 8 && stop == 0 && sstop == 0);
+					break;
+				case ske:
+				case eke:
+					special_flag2 = 0;
+					s = 1;
+					flag = 0;
+					keTobi(i, j, s); break;
 				case sgi:
 				case egi:
 					special_flag2 = 0;
@@ -1183,13 +1183,13 @@ void gameRule() {
 					flag = 0;
 					SiNaHi(i, j, s); break;
 				case sto:
-                case sny:
-                case snk:
+				case sny:
+				case snk:
 				case sng:
 				case ski:
 				case eto:
-                case eny:
-                case enk:
+				case eny:
+				case enk:
 				case eng:
 				case eki:
 					special_flag2 = 0;
@@ -1258,7 +1258,7 @@ void gameRule() {
 					break;
 				case shi:
 				case ehi:
-                    //cout<<"@"<<board[i][j]<<"@"<<endl;
+					//cout<<"@"<<board[i][j]<<"@"<<endl;
 					special_flag2 = 0;
 					flag = 0;
 					s = 1;
@@ -1818,26 +1818,26 @@ int main() {
 				e = 0;
 				f = 0;
 
-        		a = x / 1000;
-        		b = (x % 1000) /100;
-        		c = (x % 100) / 10;
-       			d = x % 10;
-        
-       			b -= 1;
-       			d -= 1;
-       
-        		e = 0;
-        		f = 0;
-       			while(f == 0) {
-           			if((c + e) == 9) {
-               			c = e;
-               			f++;
-           			}
-           			e++;
-       			}
-        
-        		i = d;
-        		j = c;
+				a = x / 1000;
+				b = (x % 1000) /100;
+				c = (x % 100) / 10;
+	   			d = x % 10;
+		
+	   			b -= 1;
+	   			d -= 1;
+	   
+				e = 0;
+				f = 0;
+	   			while(f == 0) {
+		   			if((c + e) == 9) {
+			   			c = e;
+			   			f++;
+		   			}
+		   			e++;
+	   			}
+		
+				i = d;
+				j = c;
 
 			cout<<setw(3)<<nr<<"."<</*te[nr-1]*/9-a<<b+2<<c<<d+2<<koma<<" ";
 			if(nr % 9 == 0) {
@@ -1857,26 +1857,26 @@ int main() {
 
 				e = 0;
 				f = 0;
-       			a = x / 1000;
-        		b = (x % 1000) /100;
-        		c = (x % 100) / 10;
-        		d = x % 10;
-        
-        		b -= 1;
-        		d -= 1;
-        
-        		e = 0;
-        		f = 0;
-        		while(f == 0) {
-            		if((c + e) == 9) {
-                		c = e;
-                		f++;
-            		}
-            		e++;
-        		}
-        
-        		i = d;
-        		j = c;
+	   			a = x / 1000;
+				b = (x % 1000) /100;
+				c = (x % 100) / 10;
+				d = x % 10;
+		
+				b -= 1;
+				d -= 1;
+		
+				e = 0;
+				f = 0;
+				while(f == 0) {
+					if((c + e) == 9) {
+						c = e;
+						f++;
+					}
+					e++;
+				}
+		
+				i = d;
+				j = c;
 
 			cout<<setw(3)<<mnr<<"."<</*te[nr-1]*/"M"<<"+"<<c<<d+2<<koma<<" ";
 			if(mnr % 9 == 0) {
@@ -1897,33 +1897,33 @@ int main() {
 				koma = ete[nr-1].substr(4, 5);
 
 	
-        			a = x / 1000;
-        			b = (x % 1000) /100;
-        			c = (x % 100) / 10;
-        			d = x % 10;
-        
-        			b -= 1;
-        			d -= 1;
-        
-        			e = 0;
-        			f = 0;
-        			while(f == 0) {
-            			if((c + e) == 9) {
-                			c = e;
-                			f++;
-            			}
-            			e++;
-        			}
-        
-        			i = d;
-        			j = c;
+					a = x / 1000;
+					b = (x % 1000) /100;
+					c = (x % 100) / 10;
+					d = x % 10;
+		
+					b -= 1;
+					d -= 1;
+		
+					e = 0;
+					f = 0;
+					while(f == 0) {
+						if((c + e) == 9) {
+							c = e;
+							f++;
+						}
+						e++;
+					}
+		
+					i = d;
+					j = c;
 
-        			//a += 9-a;
-        			//b += 2;
-        			//d += 2;
-        			
-    			//}
-        		
+					//a += 9-a;
+					//b += 2;
+					//d += 2;
+					
+				//}
+				
 
 				cout<<setw(3)<<nr<<"."<<9-a<<b+2<<c<<d+2<<koma<<" ";
 				if(nr % 9 == 0) {
@@ -1943,26 +1943,26 @@ int main() {
 
 				e = 0;
 				f = 0;
-       			a = x / 1000;
-        		b = (x % 1000) /100;
-        		c = (x % 100) / 10;
-        		d = x % 10;
-        
-        		b -= 1;
-        		d -= 1;
-        
-        		e = 0;
-        		f = 0;
-        		while(f == 0) {
-            		if((c + e) == 9) {
-                		c = e;
-                		f++;
-            		}
-            		e++;
-        		}
-        
-        		i = d;
-        		j = c;
+	   			a = x / 1000;
+				b = (x % 1000) /100;
+				c = (x % 100) / 10;
+				d = x % 10;
+		
+				b -= 1;
+				d -= 1;
+		
+				e = 0;
+				f = 0;
+				while(f == 0) {
+					if((c + e) == 9) {
+						c = e;
+						f++;
+					}
+					e++;
+				}
+		
+				i = d;
+				j = c;
 
 			cout<<setw(3)<<mnr<<"."<</*te[nr-1]*/"M"<<"-"<<c<<d+2<<koma<<" ";
 			if(mnr % 9 == 0) {
