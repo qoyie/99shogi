@@ -112,7 +112,7 @@ void draw() {
 			if((v=board(i)[j])==0){
 				cout<<" * ";
 			}else{
-				cout<<v<0?"-":"+";
+				cout<<(v<0?"-":"+");
 				switch(abs(v)) {
 					case sfu: cout<<"歩"; break;
 					case sky: cout<<"香"; break;
