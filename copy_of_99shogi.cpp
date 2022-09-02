@@ -2,30 +2,28 @@
 #include <iomanip>
 #include <string>
 #include <sstream>
-#include <sstream>
 #include <stdlib.h>
-#include <stdio.h>
 #include <random>
 #include <time.h>
 
 using namespace std;
 
 enum {
-	emp = 0,
-	sfu = 1,
-	sky = 2,
-	ske = 3,
-	sgi = 4,
-	ski = 5,
-	ska = 6,
-	shi = 7,
-	sto = 8,
-	sny = 9,
-	snk = 10,
-	sng = 11,
-	sum = 12,
-	sry = 13,
-	sgy = 14,
+	emp,
+	sfu,
+	sky,
+	ske,
+	sgi,
+	ski,
+	ska,
+	shi,
+	sto,
+	sny,
+	snk,
+	sng,
+	sum,
+	sry,
+	sgy,
 	efu = -1,
 	eky = -2,
 	eke = -3,
@@ -282,473 +280,49 @@ void keTobi(int i, int j, int s) {
 
 int special_flag1;
 int special_flag2;
+#define moveto_sub(ud,t) \
+do{\
+	for(int k = 1; k <= s; k++) {\
+		if((ud == -1 ? i-k >= 0 : ud == 1 ? i+k <= 9 ? true) &&\
+		   (rl == -1 ? j-k >= 0 : rl == 1 ? j+k <= 9 ? true) && board(i+k*ud)[j+k*rl]) {\
+			for(int n = 0; n < 100; n++) {\
+				if(t[n].empty()) {\
+					t[n] = to_string(1000 * j + 100 * i + 10 * (j+k*rl) + i+k*ud) + komaKind(i, j);\
+					break;\
+				}\
+			}\
+			if(board(i+k*ud)[j+k*rl]) break;\
+		}else break;\
+	}\
+}while(false)
 
-void above(int i, int j, int s) {
-	if(board(i)[j] > 0) {
-		if(i-s >= 0) { // >=
-			if(board(i-s)[j] != 0 /*|| special_flag2 != 0*/) {
-				special_flag1++;
-				flag++;
-			}
-			if(board(i-s)[j] > 0) {
-				special_flag2++;
-				flag++;
-			}
-			if(board(i-s)[j] <= 0) {
-				for(int n = 0; n < 100; n++) {
-					if(te[n].empty() != 0 && flag < 2 && special_flag2 == 0) {
-						te[n] = to_string(1000 * j + 100 * i + 10 * (j) + i-s) + komaKind(i, j);
-						break;
-					}
-				}
-				if(board(i-s)[j] < 0) {
-					stop++;
-				}
-				if(board(i-s)[j] > 0) {
-					sstop++;
-				}
-			}
-		}
-	}
+#define moveto(ud,rl) \
+do{\
+	if(board(i)[j] > 0) {\
+		moveto_sub(-1*ud, rl, te);\
+	} else if(board(i)[j] < 0) {\
+		moveto_sub(ud, rl, ete);\
+	}\
+}while(false)
 
-	if(board(i)[j] < 0) {
-		if(i+s < 9) {
-			//if(board(i+s)[j] >= 0) {
-				if(board(i+s)[j] != 0) {
-						special_flag1++;
-						flag++;
-				}
-				if(board(i+s)[j] < 0) {
-					special_flag2++;
-					flag++;
-				}
-				for(int n = 0; n < 100; n++) {
-					if(ete[n].empty() != 0 && flag < 2 && special_flag2 == 0) {
-						ete[n] = to_string(1000 * j + 100 * i + 10 * (j) + i+s) + komaKind(i, j);
-						if(n == 23 && ete[n].length() != 0) {
-							//cout<<"fu is ok "<<ete[23]<<endl;
-						}
-						break;
-					}
-				}
-				if(board(i+s)[j] > 0) {
-					stop++;
-				}
-				if(board(i+s)[j] < 0) {
-					sstop++;
-				}
-			//}
-		}
-	}
-}
-
-void below(int i, int j, int s) {
-	if(board(i)[j] > 0) {
-		if(i+s < 9) {
-			if(board(i+s)[j] != 0) {
-						flag++;
-			}
-			if(board(i+s)[j] > 0) {
-						special_flag2++;
-						flag++;
-			}
-			if(board(i+s)[j] <= 0) {
-				for(int n = 0; n < 100; n++) {
-					if(te[n].empty() != 0 && flag < 2 && special_flag2 == 0) {
-						te[n] = to_string(1000 * j + 100 * i + 10 * (j) + i+s) + komaKind(i, j);
-						break;
-					}
-				}
-				if(board(i+s)[j] < 0) {
-					stop++;
-				}
-				if(board(i+s)[j] > 0) {
-					sstop++;
-				}
-			}
-		}
-	}
-
-	if(board(i)[j] < 0) {
-		if(i-s >= 0) {
-			//if(board(i-s)[j] >= 0) {
-				if(board(i-s)[j] != 0) {
-							flag++;
-				}
-				if(board(i-s)[j] < 0) {
-					special_flag2++;
-							flag++;
-				}
-				for(int n = 0; n < 100; n++) {
-					if(ete[n].empty() != 0 && flag < 2 && special_flag2 == 0) {
-						ete[n] = to_string(1000 * j + 100 * i + 10 * (j) + i-s) + komaKind(i, j);
-						break;
-					}
-				}
-				if(board(i-s)[j] > 0) {
-					stop++;
-				}
-				if(board(i-s)[j] < 0) {
-					sstop++;
-				}
-			//}
-		}
-	}
-}
-
-void right(int i, int j, int s) {
-	if(board(i)[j] > 0) {
-		if(j+s < 9) {
-			if(board(i)[j+s] != 0) {
-						flag++;
-			}
-			if(board(i)[j+s] > 0) {
-				special_flag2++;
-						flag++;
-			}
-			if(board(i)[j+s] <= 0) {
-				for(int n = 0; n < 100; n++) {
-					if(te[n].empty() != 0 && flag < 2 && special_flag2 == 0) {
-						te[n] = to_string(1000 * j + 100 * i + 10 * (j+s) + i) + komaKind(i, j);
-						break;
-					}
-				}
-				if(board(i)[j+s] < 0) {
-					stop++;
-				}
-				if(board(i)[j+s] > 0) {
-					sstop++;
-				}
-			}
-		}
-	}
-
-	if(board(i)[j] < 0) {
-		if(j+s < 9) {
-			if(board(i)[j+s] != 0) {
-						flag++;
-			}
-			if(board(i)[j+s] < 0) {
-				special_flag2++;
-						flag++;
-			}
-			if(board(i)[j+s] >= 0) {
-				for(int n = 0; n < 100; n++) {
-					if(ete[n].empty() != 0 && flag < 2 && special_flag2 == 0) {
-						ete[n] = to_string(1000 * j + 100 * i + 10 * (j+s) + i) + komaKind(i, j);
-						break;
-					}
-				}
-				if(board(i)[j+s] > 0) {
-					stop++;
-				}
-				if(board(i)[j+s] < 0) {
-					sstop++;
-				}
-			}
-		}
-	}
-}
-
-void left(int i, int j, int s) {
-	//cout<<"flag = "<<flag<<endl;
-	if(board(i)[j] > 0 && ff == 0) {
-		if(j-s >= 0) {
-			if(board(i)[j-s] != 0) { //!
-				flag++;
-			}
-			if(board(i)[j-s] > 0) {
-				special_flag2++;
-				flag++;
-			}
-			/*if(flag == 2) {
-				ff = 1;
-			}*/
-			//cout<<"flag = "<<flag<<endl;
-			if(board(i)[j-s] <= 0) {
-				/*if(flag < 2) {
-					cout<<board(7)[1]<<endl;
-					cout<<"board["<<i<<"]["<<j-s<<"]"<<endl;
-					cout<<board(i)[j-s]<<endl;
-				}*/
-				for(int n = 0; n < 100; n++) {
-					if(te[n].empty() == 1 && flag < 2 && special_flag2 == 0/* && ff == 0*/) {
-						te[n] = to_string(1000 * j + 100 * i + 10 * (j-s) + i) + komaKind(i, j);
-						break;
-					}
-				}
-				/*te[90] = to_string(1000 * j + 100 * i + 10 * (j-s) + i) + komaKind(i, j);
-				return;*/
-				if(board(i)[j-s] < 0) {
-					stop++;
-				}
-				if(board(i)[j-s] > 0) {
-					sstop++;
-				}
-			}
-		}
-	}
-
-	if(board(i)[j] < 0) {
-		if(j-s >= 0) {
-			//if(board(i)[j-s] >= 0) {
-				if(board(i)[j-s] != 0) {
-						flag++;
-				}
-				if(board(i)[j-s] < 0) {
-					special_flag2++;
-						flag++;
-				}
-				for(int n = 0; n < 100; n++) {
-					if(ete[n].empty() != 0 && flag < 2 && special_flag2 == 0) {
-						ete[n] = to_string(1000 * j + 100 * i + 10 * (j-s) + i) + komaKind(i, j);
-						break;
-					}
-				}
-				if(board(i)[j-s] > 0) {
-					stop++;
-				}
-				if(board(i)[j-s] < 0) {
-					sstop++;
-				}
-			//}
-		}
-	}
-}
-
-void UeNaMi(int i, int j, int s) {
-	if(board(i)[j] > 0) {
-		if(i-s >= 0 && j+s < 9) {
-			if(board(i-s)[j+s] != 0) {
-						//special_flag2++;
-						flag++;
-			}
-			if(board(i-s)[j+s] > 0) {
-				special_flag2++;
-						flag++;
-			}
-			if(board(i-s)[j+s] <= 0) {
-				for(int n = 0; n < 100; n++) {
-					if(te[n].empty() != 0 && flag < 2 && special_flag2 == 0) {
-						te[n] = to_string(1000 * j + 100 * i + 10 * (j+s) + i-s) + komaKind(i, j);
-						break;
-					}
-				}
-				if(board(i-s)[j+s] < 0) {
-					stop++;
-				}
-				if(board(i-s)[j+s] > 0) {
-					sstop++;
-				}
-			}
-		}
-	}
-
-	if(board(i)[j] < 0) {
-		if(i+s < 9 && j+s < 9) {
-			if(board(i+s)[j+s] != 0) {
-						//special_flag2++;
-						flag++;
-			}
-			if(board(i+s)[j+s] < 0) {
-				special_flag2++;
-						flag++;
-			}
-			if(board(i+s)[j+s] >= 0) {
-				for(int n = 0; n < 100; n++) {
-					if(ete[n].empty() != 0 && flag < 2 && special_flag2 == 0) {
-						ete[n] = to_string(1000 * j + 100 * i + 10 * (j+s) + i+s) + komaKind(i, j);
-						break;
-					}
-				}
-				if(board(i+s)[j+s] > 0) {
-					stop++;
-				}
-				if(board(i+s)[j+s] < 0) {
-					sstop++;
-				}
-			}
-		}
-	}
-}
-
-void SiNaMi(int i, int j, int s) {
-	if(board(i)[j] > 0) {
-		if(i+s < 9 && j+s < 9) {
-			if(board(i+s)[j+s] != 0) {
-						flag++;
-			}
-			if(board(i+s)[j+s] > 0) {
-				special_flag2++;
-						flag++;
-			}
-			if(board(i+s)[j+s] <= 0) {
-				for(int n = 0; n < sizeof(te[100]); n++) {
-					if(te[n].empty() != 0 && flag < 2 && special_flag2 == 0) {
-						te[n] = to_string(1000 * j + 100 * i + 10 * (j+s) + i+s) + komaKind(i, j);
-						break;
-					}
-				}
-				if(board(i+s)[j+s] < 0) {
-					stop++;
-				}
-				if(board(i+s)[j+s] > 0) {
-					sstop++;
-				}
-			}
-		}
-	}
-
-	if(board(i)[j] < 0) {
-		if(i-s >= 0 && j+s < 9) {
-			//if(board(i-s)[j+s] >= 0) {
-				if(board(i-s)[j+s] != 0) {
-						flag++;
-				}
-				if(board(i-s)[j+s] < 0) {
-					special_flag2++;
-						flag++;
-				}
-				for(int n = 0; n < sizeof(te[100]); n++) {
-					if(ete[n].empty() != 0 && flag < 2 && special_flag2 == 0) {
-						ete[n] = to_string(1000 * j + 100 * i + 10 * (j+s) + i-s) + komaKind(i, j);
-						break;
-					}
-				}
-				if(board(i-s)[j+s] > 0) {
-					stop++;
-				}
-				if(board(i-s)[j+s] < 0) {
-					sstop++;
-				}
-			//}
-		}
-	}
-}
-
-void UeNaHi(int i, int j, int s) {
-	if(board(i)[j] > 0) {
-		if(i-s >= 0 && j-s >=  0) {
-			if(board(i-s)[j-s] != 0) {
-						flag++;
-			}
-			if(board(i-s)[j-s] > 0) {
-						special_flag2++;
-						flag++;
-			}
-			if(board(i-s)[j-s] <= 0) {
-				for(int n = 0; n < 100; n++) {
-					if(board(i)[j] == sgi) { // problem is in the flag and the special flag
-						//cout<<"ok with"<<board(i-s)[j-s]<<"\n";
-
-					}
-					if(te[n].empty() != 0 && flag < 2 && special_flag2 == 0) {
-						te[n] = to_string(1000 * j + 100 * i + 10 * (j-s) + i-s) + komaKind(i, j);
-						break;
-					}
-				}
-				if(board(i-s)[j-s] < 0) {
-					stop++;
-				}
-				if(board(i-s)[j-s] > 0) {
-					sstop++;
-				}
-			}
-		}
-	}
-
-	if(board(i)[j] < 0) {
-		if(i+s < 9 && j-s >=  0) {
-			//if(board(i+s)[j-s] >= 0) {
-				if(board(i+s)[j-s] != 0) {
-						flag++;
-				}
-				if(board(i+s)[j-s] < 0) {
-						special_flag2++;
-						flag++;
-				}
-				for(int n = 0; n < 100; n++) {
-					if(ete[n].empty() != 0 && flag < 2 && special_flag2 == 0) {
-						ete[n] = to_string(1000 * j + 100 * i + 10 * (j-s) + i+s) + komaKind(i, j);
-						break;
-					}
-				}
-				if(board(i+s)[j-s] > 0) {
-					stop++;
-				}
-				if(board(i+s)[j-s] < 0) {
-					sstop++;
-				}
-			//}
-		}
-	}
-}
-
-void SiNaHi(int i, int j, int s) {
-	if(board(i)[j] > 0) {
-		if(i+s < 9 && j-s >= 0) {
-			if(board(i+s)[j-s] != 0) {
-						flag++;
-			}
-			if(board(i+s)[j-s] > 0) {
-						special_flag2++;
-						flag++;
-			}
-			if(board(i+s)[j-s] <= 0) {
-				for(int n = 0; n < 100; n++) {
-					if(te[n].empty() != 0 && flag < 2 && special_flag2 == 0) {
-						te[n] = to_string(1000 * j + 100 * i + 10 * (j-s) + i+s) + komaKind(i, j);
-						break;
-					}
-				}
-				if(board(i+s)[j-s] < 0) {
-					stop++;
-				}
-				if(board(i+s)[j-s] > 0) {
-					sstop++;
-				}
-			}
-		}
-	}
-
-	if(board(i)[j] < 0) {
-		if(i-s >= 0 && j-s >= 0) {
-			//if(board(i-s)[j-s] >= 0) {
-				if(board(i-s)[j-s] != 0) {
-						flag++;
-				}//atodeyaru
-				if(board(i-s)[j-s] < 0) {
-						special_flag2++;
-						flag++;
-				}
-				for(int n = 0; n < 100; n++) {
-					if(ete[n].empty() != 0 && flag < 2 && special_flag2 == 0) {
-						ete[n] = to_string(1000 * j + 100 * i + 10 * (j-s) + i-s) + komaKind(i, j);
-						break;
-					}
-				}
-				if(board(i-s)[j-s] > 0) {
-					stop++;
-				}
-				if(board(i-s)[j-s] < 0) {
-					sstop++;
-				}
-			//}
-		}
-	}
-}
+void above (int i, int j, int s) { moveto( 1,  0); }
+void below (int i, int j, int s) { moveto(-1,  0); }
+void right (int i, int j, int s) { moveto( 0,  1); }
+void left  (int i, int j, int s) { moveto( 0, -1); }
+void UeNaMi(int i, int j, int s) { moveto( 1,  1); }
+void SiNaMi(int i, int j, int s) { moveto(-1,  1); }
+void UeNaHi(int i, int j, int s) { moveto( 1, -1); }
+void SiNaHi(int i, int j, int s) { moveto(-1, -1); }
 
 //!
 void seiri() {
 	for(int i = 0; i < 100; i++) {
-		if(te[i].empty() == 0) {
+		if(!te[i].empty()) {
 			while(te[i].size() != 6) {
 				te[i] = "0" + te[i];
 			}
 		}
-	}
-	for(int i = 0; i < 100; i++) {
-		if(ete[i].empty() == 0) {
+		if(!ete[i].empty()) {
 			while(ete[i].size() != 6) {
 				ete[i] = "0" + ete[i];
 			}
