@@ -81,9 +81,6 @@ int c;
 int d;
 int e;
 int f;
-int flag;
-int stop;
-int sstop;
 int ff;
 int x;
 int r;
@@ -278,8 +275,6 @@ void keTobi(int i, int j, int s) {
 	}
 }
 
-int special_flag1;
-int special_flag2;
 #define moveto_sub(ud,t) \
 do{\
 	for(int k = 1; k <= s; k++) {\
@@ -632,314 +627,69 @@ void sop() {
 void gameRule() {
 	int i = 0;
 	int j = 0;
-	int s = 0;
-	int c = 0;
-
 	for(i = 0; i < 9; i++) {
 		for(j = 0; j < 9; j++) {
-			s = 0;
-			flag = 0;
-			c = 0;
 			switch(abs(board(i)[j])) {
-				// i+s < 5; i-s >= 0;
 				case sfu:
-					//special_flag1 = 0;
-					special_flag2 = 0;  // it's important if the function includes 'above'
-					s = 1;
-					flag = 0;
-					above(i, j, s); break;
+					above (i, j, 1); break;
 				case sky:
-				//cout<<"ok with "<<i<<j<<"\n";
-					special_flag2 = 0;
-					special_flag1 = 0;
-					flag = 0;
-					s = 1;
-					stop = 0;
-					sstop = 0;
-					do {
-						flag = 0;
-						above(i, j, s);
-						++s;
-					}while(s <= 8 && stop == 0 && sstop == 0);
-					break;
+					above (i, j, 9); break;
 				case ske:
-					special_flag2 = 0;
-					s = 1;
-					flag = 0;
-					keTobi(i, j, s); break;
+					keTobi(i, j, 1); break;
 				case sgi:
-					special_flag2 = 0;
-					s = 1;
-					flag = 0;
-					above(i, j, s);
-					special_flag2 = 0;
-					s = 1;
-					flag = 0;
-					UeNaMi(i, j, s);
-					special_flag2 = 0;
-					s = 1;
-					flag = 0;
-					UeNaHi(i, j, s);
-					special_flag2 = 0;
-					s = 1;
-					flag = 0;
-					SiNaMi(i, j, s);
-					special_flag2 = 0;
-					s = 1;
-					flag = 0;
-					SiNaHi(i, j, s); break;
+					above (i, j, 1);
+					UeNaMi(i, j, 1);
+					UeNaHi(i, j, 1);
+					SiNaMi(i, j, 1);
+					SiNaHi(i, j, 1); break;
 				case sto:
 				case sny:
 				case snk:
 				case sng:
 				case ski:
-					special_flag2 = 0;
-					s = 1;
-					flag = 0;
-					above(i, j, s);
-					special_flag2 = 0;
-					s = 1;
-					flag = 0;
-					below(i, j, s);
-					special_flag2 = 0;
-					s = 1;
-					flag = 0;
-					UeNaMi(i, j, s);
-					special_flag2 = 0;
-					s = 1;
-					flag = 0;
-					UeNaHi(i, j, s);
-					special_flag2 = 0;
-					s = 1;
-					flag = 0;
-					right(i, j, s);
-					special_flag2 = 0;
-					s = 1;
-					flag = 0;
-					left(i, j, s); break;
+					above (i, j, 1);
+					below (i, j, 1);
+					UeNaMi(i, j, 1);
+					UeNaHi(i, j, 1);
+					right (i, j, 1);
+					left  (i, j, 1); break;
 				case ska:
-					special_flag2 = 0;
-					flag = 0;
-					s = 1;
-					stop = 0;
-					sstop = 0;
-					do {
-						flag = 0;
-						UeNaMi(i, j, s);
-						++s;
-					}while(s <= 8 && stop == 0 && sstop == 0);
-					s = 1;
-					stop = 0;
-					sstop = 0;
-					special_flag2 = 0;
-					do {
-						flag = 0;
-						UeNaHi(i, j, s);
-						++s;
-					}while(s <= 8 && stop == 0 && sstop == 0);
-					s = 1;
-					stop = 0;
-					sstop = 0;
-					special_flag2 = 0;
-					do {
-						flag = 0;
-						SiNaMi(i, j, s);
-						++s;
-					}while(s <= 8 && stop == 0 && sstop == 0);
-					s = 1;
-					stop = 0;
-					sstop = 0;
-					special_flag2 = 0;
-					do {
-						flag = 0;
-						SiNaHi(i, j, s);
-						++s;
-					}while(s <= 8 && stop == 0 && sstop == 0);
-					break;
+					UeNaMi(i, j, 9);
+					UeNaHi(i, j, 9);
+					SiNaMi(i, j, 9);
+					SiNaHi(i, j, 9); break;
 				case shi:
-					//cout<<"@"<<board(i)[j]<<"@"<<endl;
-					special_flag2 = 0;
-					flag = 0;
-					s = 1;
-					stop = 0;
-					sstop = 0;
-					do {
-						flag = 0;
-						above(i, j, s);
-						++s;
-					}while(s <= 8 && stop == 0 && sstop == 0);
-					s = 1;
-					stop = 0;
-					sstop = 0;
-					special_flag2 = 0;
-					do {
-						flag = 0;
-						below(i, j, s);
-						++s;
-					}while(s <= 8 && stop == 0 && sstop == 0);
-					s = 1;
-					stop = 0;
-					sstop = 0;
-					special_flag2 = 0;
-					do {
-						flag = 0;
-						right(i, j, s);
-						++s;
-					}while(s <= 8 && stop == 0 && sstop == 0);
-					s = 1;
-					stop = 0;
-					sstop = 0;
-					special_flag2 = 0;
-					do {
-						flag = 0;
-						left(i, j, s);
-						++s;
-					}while(s <= 8 && stop == 0 && sstop == 0);
-					break;
+					above (i, j, 9);
+					below (i, j, 9);
+					right (i, j, 9);
+					left  (i, j, 9); break;
 				case sum:
-					stop = 0;
-					special_flag2 = 0;
-					flag = 0;
-					s = 1;
-					above(i, j, s);
-					special_flag2 = 0;
-					s = 1;
-					flag = 0;
-					below(i, j, s);
-					special_flag2 = 0;
-					s = 1;
-					flag = 0;
-					right(i, j, s);
-					special_flag2 = 0;
-					s = 1;
-					flag = 0;
-					left(i, j, s);
-					special_flag2 = 0;
-					s = 1;
-					flag = 0;
-					stop = 0;
-					sstop = 0;
-					do {
-						flag = 0;
-						UeNaMi(i, j, s);
-						++s;
-					}while(s <= 8 && stop == 0 && sstop == 0);
-					s = 1;
-					stop = 0;
-					sstop = 0;
-					special_flag2 = 0;
-					do {
-						flag = 0;
-						UeNaHi(i, j, s);
-						++s;
-					}while(s <= 8 && stop == 0 && sstop == 0);
-					s = 1;
-					stop = 0;
-					sstop = 0;
-					special_flag2 = 0;
-					do {
-						flag = 0;
-						SiNaMi(i, j, s);
-						++s;
-					}while(s <= 8 && stop == 0 && sstop == 0);
-					s = 1;
-					stop = 0;
-					sstop = 0;
-					special_flag2 = 0;
-					do {
-						flag = 0;
-						SiNaHi(i, j, s);
-						++s;
-					}while(s <= 8 && stop == 0 && sstop == 0);
-					break;
+					above (i, j, 1);
+					below (i, j, 1);
+					right (i, j, 1);
+					left  (i, j, 1);
+					UeNaMi(i, j, 9);
+					UeNaHi(i, j, 9);
+					SiNaMi(i, j, 9);
+					SiNaHi(i, j, 9); break;
 				case sry:
-					special_flag2 = 0;
-					flag = 0;
-					s = 1;
-					UeNaMi(i, j, s);
-					special_flag2 = 0;
-					s = 1;
-					flag = 0;
-					UeNaHi(i, j, s);
-					special_flag2 = 0;
-					s = 1;
-					flag = 0;
-					SiNaMi(i, j, s);
-					special_flag2 = 0;
-					s = 1;
-					flag = 0;
-					SiNaHi(i, j, s);
-					special_flag2 = 0;
-					s = 1;
-					flag = 0;
-					stop = 0;
-					sstop = 0;
-					do {
-						flag = 0;
-						above(i, j, s);
-						++s;
-					}while(s <= 8 && stop == 0 && sstop == 0);
-					s = 1;
-					stop = 0;
-					sstop = 0;
-					special_flag2 = 0;
-					do {
-						flag = 0;
-						below(i, j, s);
-						++s;
-					}while(s <= 8 && stop == 0 && sstop == 0);
-					s = 1;
-					stop = 0;
-					sstop = 0;
-					special_flag2 = 0;
-					do {
-						flag = 0;
-						right(i, j, s);
-						++s;
-					}while(s <= 8 && stop == 0 && sstop == 0);
-					s = 1;
-					stop = 0;
-					sstop = 0;
-					special_flag2 = 0;
-					do {
-						flag = 0;
-						left(i, j, s);
-						++s;
-					}while(s <= 8 && stop == 0 && sstop == 0);
-					break;
+					UeNaMi(i, j, 1);
+					UeNaHi(i, j, 1);
+					SiNaMi(i, j, 1);
+					SiNaHi(i, j, 1);
+					above (i, j, 9);
+					below (i, j, 9);
+					right (i, j, 9);
+					left  (i, j, 9); break;
 				case sgy:
-					special_flag2 = 0;
-					flag = 0;
-					s = 1;
-					above(i, j, s);
-					special_flag2 = 0;
-					s = 1;
-					flag = 0;
-					below(i, j, s);
-					special_flag2 = 0;
-					s = 1;
-					flag = 0;
-					right(i, j, s);
-					special_flag2 = 0;
-					s = 1;
-					flag = 0;
-					left(i, j, s);
-					special_flag2 = 0;
-					s = 1;
-					flag = 0;
-					UeNaMi(i, j, s);
-					special_flag2 = 0;
-					s = 1;
-					flag = 0;
-					UeNaHi(i, j, s);
-					special_flag2 = 0;
-					s = 1;
-					flag = 0;
-					SiNaMi(i, j, s);
-					special_flag2 = 0;
-					s = 1;
-					flag = 0;
-					SiNaHi(i, j, s); break;
+					above (i, j, 1);
+					below (i, j, 1);
+					right (i, j, 1);
+					left  (i, j, 1);
+					UeNaMi(i, j, 1);
+					UeNaHi(i, j, 1);
+					SiNaMi(i, j, 1);
+					SiNaHi(i, j, 1); break;
 				default: break;
 			}
 			/*
