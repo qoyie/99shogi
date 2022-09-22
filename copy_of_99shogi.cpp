@@ -557,21 +557,12 @@ void gameRule() {
 					UeNaHi(i, j, 1);
 					right (i, j, 1);
 					left  (i, j, 1); break;
-				case ka:
-					UeNaMi(i, j, 9);
-					UeNaHi(i, j, 9);
-					SiNaMi(i, j, 9);
-					SiNaHi(i, j, 9); break;
-				case hi:
-					above (i, j, 9);
-					below (i, j, 9);
-					right (i, j, 9);
-					left  (i, j, 9); break;
 				case um:
 					above (i, j, 1);
 					below (i, j, 1);
 					right (i, j, 1);
 					left  (i, j, 1);
+				case hi:
 					UeNaMi(i, j, 9);
 					UeNaHi(i, j, 9);
 					SiNaMi(i, j, 9);
@@ -581,6 +572,7 @@ void gameRule() {
 					UeNaHi(i, j, 1);
 					SiNaMi(i, j, 1);
 					SiNaHi(i, j, 1);
+				case ka:
 					above (i, j, 9);
 					below (i, j, 9);
 					right (i, j, 9);
