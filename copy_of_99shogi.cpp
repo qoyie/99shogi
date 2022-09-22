@@ -54,7 +54,6 @@ int _board[81] = {
 
 int pte[TE_MAX+1];
 int cte[TE_MAX+1];
-int new_pte[TE_MAX+1];
 int pkoma[7];
 int ckoma[7];
 int game_count;
@@ -134,7 +133,7 @@ void draw() {
 	for(int i = 0; i < 9; i++) {
 		for(int j = 0; j < 9; j++) {
 			if((v=board(i)[j])==0){
-				cout<<".　";
+				cout<<" * ";
 			}else{
 				cout<<(isp(v)?"+":"-");
 				switch(abs(v)) {
