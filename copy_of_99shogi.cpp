@@ -13,28 +13,21 @@
 #define sete(t,to_i,to_j) sette(t,i,j,to_i,to_j,abs(board(i)[j]))
 #define isc(a) (a < 0)
 #define isp(a) (a > 0)
+#define to_c -
+#define to_p +
 
 using namespace std;
 
 enum {
-	em,
-	 fu,  ky,  ke,  gi,  ki,  ka,  hi,  to,  ny,  nk,  ng,  um,  ry,  gy,
-	emp=0,
-	pfu, pky, pke, pgi, pki, pka, phi, pto, pny, pnk, png, pum, pry, pgy,
-	cfu = -1,
-	cky = -2,
-	cke = -3,
-	cgi = -4,
-	cki = -5,
-	cka = -6,
-	chi = -7,
-	cto = -8,
-	cny = -9,
-	cnk = -10,
-	cng = -11,
-	cum = -12,
-	cry = -13,
-	cgy = -14,
+	em, emp=0,
+	fu, ky, ke, gi, ki, ka, hi,
+	to, ny, nk, ng,     um, ry, gy,
+
+	pfu = to_p(fu), pky = to_p(ky), pke = to_p(ke), pgi = to_p(gi), pki = to_p(ki), pka = to_p(ka), phi = to_p(hi),
+	pto = to_p(to), pny = to_p(ny), pnk = to_p(nk), png = to_p(ng),                 pum = to_p(um), pry = to_p(ry), pgy = to_p(gy),
+
+	cfu = to_c(fu), cky = to_c(ky), cke = to_c(ke), cgi = to_c(gi), cki = to_c(ki), cka = to_c(ka), chi = to_c(hi),
+	cto = to_c(to), cny = to_c(ny), cnk = to_c(nk), cng = to_c(ng),                 cum = to_c(um), cry = to_c(ry), cgy = to_c(gy),
 };
 
 string FU = "FU", KY = "KY", KE = "KE", GI = "GI", KI = "KI", KA = "KA", HI = "HI",
@@ -157,17 +150,17 @@ void draw() {
 		cout<<" "<<i+1<<endl;
 	}
 	cout<<"ckoma:";
-	for(int i=0,l=0; i<sizeof(ckoma)/sizeof(ckoma[0]); ++i) {
+	for(int i=0,l=0; i<sizeof(ckoma)/sizeof(ckoma[0]); i++) {
 		string k=komaName(i+1);
-		for(int j=0; j<ckoma[i]; ++j) {
+		for(int j=0; j<ckoma[i]; j++) {
 			cout<<" "<<k;
 			if(++l == 10) { cout<<endl<<"      "; l=0; }
 		}
 	}
 	cout<<endl<<"pkoma:";
-	for(int i=0,l=0; i<sizeof(pkoma)/sizeof(pkoma[0]); ++i) {
+	for(int i=0,l=0; i<sizeof(pkoma)/sizeof(pkoma[0]); i++) {
 		string k=komaName(i+1);
-		for(int j=0; j<pkoma[i]; ++j) {
+		for(int j=0; j<pkoma[i]; j++) {
 			cout<<" "<<k;
 			if(++l == 10) { cout<<endl<<"      "; l=0; }
 		}
@@ -214,6 +207,7 @@ int checkmove(int from_i,int from_j,int to_i,int to_j,int koma) {
 		cout<<"You can't naru "<<komaName(from_koma)<<" into "<<komaName(koma)<<"."<<endl;
 		return 0;
 	}
+	koma = from_koma;
 	switch(koma) {
 		case to: case ny: case nk: case ng:
 			koma = ki; break;
@@ -323,7 +317,7 @@ int pKoma(int i, int j, int k) {
 			cout<<endl<<"*** YOU WIN! ***"<<endl;
 			exit(0);
 		}
-		++pkoma[unNaru(abs(board(i)[j]))-1];
+		pkoma[unNaru(abs(board(i)[j]))-1]++;
 	} else if(isp(board(i)[j])) return 0;
 	board(i)[j] = abs(k);
 	return 1;
@@ -335,11 +329,86 @@ int cKoma(int i, int j, int k) {
 			cout<<endl<<"** YOU LOSE ***"<<endl;
 			exit(0);
 		}
-		++ckoma[unNaru(board(i)[j])-1];
+		ckoma[unNaru(board(i)[j])-1]++;
 	} else if(isc(board(i)[j])) return 0;
 	board(i)[j] = -abs(k);
 	return 1;
 }
+
+/*
+void pnaru() {
+	for(int i = 0; i < 100; i++) {
+		if(pte[i]/81%9<3 || pte[i]%9<3) {
+			if(*pte < TE_MAX) {
+				int k=pte[i]/6561;
+				pte[k==gi||(k==ke||k==ky)&&pte[i]/729%9==3
+					?++*pte:i] = pte[i]%6561+naru(k)*6561;
+			} else outofrange;
+		}
+	}
+}
+*/
+
+void cnaru() {
+	for(int i = 0; i < 100; i++) {
+		if(cte[i]/9/9/9%9>5 || cte[i]/9%9>5) {
+			if(*cte < TE_MAX) {
+				int k=cte[i]/6561;
+				cte[k==gi||(k==ke||k==ky)&&cte[i]/729%9==6
+					?++*cte:i] = cte[i]%6561+naru(k)*6561;
+			} else outofrange;
+		}
+	}
+}
+
+void gameRule(int flag) {
+	for(int i = 0; i < 9; i++) {
+		for(int j =0; j < 9; j++) {
+			if(board(i)[j]*flag > 0) {
+				switch(abs(board(i)[j])) {
+					case fu:
+						above           (i, j, 1); break;
+					case ky:
+						above           (i, j, 9); break;
+					case ke:
+						keTobi          (i, j, 1); break;
+					case gi:
+						above           (i, j, 1);
+						diagonally_above(i, j, 1);
+						diagonally_below(i, j, 1); break;
+					case to: case ny: case nk: case ng: case ki:
+						above           (i, j, 1);
+						below           (i, j, 1);
+						diagonally_above(i, j, 1);
+						left_and_right  (i, j, 1); break;
+					case um:
+						above           (i, j, 1);
+						below           (i, j, 1);
+						left_and_right  (i, j, 1); /***breakthrough***/
+					case ka:
+						diagonally_above(i, j, 9);
+						diagonally_below(i, j, 9); break;
+					case ry:
+						diagonally_above(i, j, 1);
+						diagonally_below(i, j, 1); /***breakthrough***/
+					case hi:
+						above           (i, j, 9);
+						below           (i, j, 9);
+						left_and_right  (i, j, 9); break;
+					case gy:
+						above           (i, j, 1);
+						below           (i, j, 1);
+						left_and_right  (i, j, 1);
+						diagonally_above(i, j, 1);
+						diagonally_below(i, j, 1); break;
+				}
+			}
+		}
+	}
+}
+
+#define cGameRule() gameRule(to_c(1))
+#define pGameRule() gameRule(to_p(1))
 
 void pop() {
 	string t,k;
@@ -403,14 +472,29 @@ void pop() {
 }
 
 void cop() {
+	//gameRule();
+	cGameRule();
+	//pnaru();
+	cnaru();
+	cout<<"<COMPUTER'S MOVE>"<<endl;
+	for(int nr = 1; nr <= *cte; nr++) {
+		int k = cte[nr]/9/9/9/9;
+		int a = cte[nr]/9/9/9%9;
+		int b = cte[nr]/9/9%9;
+		int c = cte[nr]/9%9;
+		int d = cte[nr]%9;
+		cout<<setw(3)<<nr<<"."<<9-b<<a+1<<9-d<<c+1<<komaName(k)<<" ";
+		if(nr % 9 == 0) cout<<endl;
+	}
+	cout<<endl;
 	string t;
 	srand(time(0UL));
 	int sum=0;
-	for(int i=0;i < sizeof(ckoma)/sizeof(ckoma[0]); ++i) {
+	for(int i=0;i < sizeof(ckoma)/sizeof(ckoma[0]); i++) {
 		sum+=ckoma[i];
 	}
 	int r = rand() % (*cte+sum);
-	if(r <= *cte) {
+	if(r+1 <= *cte) {
 		int k = cte[r+1]/9/9/9/9;
 		int a = cte[r+1]/9/9/9%9;
 		int b = cte[r+1]/9/9%9;
@@ -443,76 +527,7 @@ void cop() {
 			break;
 		}
 	}
-}
-
-/*
-void pnaru() {
-	for(int i = 0; i < 100; i++) {
-		if(pte[i]/81%9<3 || pte[i]%9<3) {
-			if(*pte < TE_MAX) {
-				int k=pte[i]/6561;
-				pte[k==gi||(k==ke||k==ky)&&pte[i]/729%9==3
-					?++*pte:i] = pte[i]%6561+naru(k)*6561;
-			} else outofrange;
-		}
-	}
-}
-*/
-
-void cnaru() {
-	for(int i = 0; i < 100; i++) {
-		if(cte[i]/9/9/9%9>5 || cte[i]/9%9>5) {
-			if(*cte < TE_MAX) {
-				int k=cte[i]/6561;
-				cte[k==gi||(k==ke||k==ky)&&cte[i]/729%9==6
-					?++*cte:i] = cte[i]%6561+naru(k)*6561;
-			} else outofrange;
-		}
-	}
-}
-
-void gameRule() {
-	for(int i = 0; i < 9; i++) {
-		for(int j = 0; j < 9; j++) {
-			if(isc(board(i)[j]))switch(abs(board(i)[j])) {
-				case fu:
-					above           (i, j, 1); break;
-				case ky:
-					above           (i, j, 9); break;
-				case ke:
-					keTobi          (i, j, 1); break;
-				case gi:
-					above           (i, j, 1);
-					diagonally_above(i, j, 1);
-					diagonally_below(i, j, 1); break;
-				case to: case ny: case nk: case ng: case ki:
-					above           (i, j, 1);
-					below           (i, j, 1);
-					diagonally_above(i, j, 1);
-					left_and_right  (i, j, 1); break;
-				case um:
-					above           (i, j, 1);
-					below           (i, j, 1);
-					left_and_right  (i, j, 1); /***breakthrough***/
-				case ka:
-					diagonally_above(i, j, 9);
-					diagonally_below(i, j, 9); break;
-				case ry:
-					diagonally_above(i, j, 1);
-					diagonally_below(i, j, 1); /***breakthrough***/
-				case hi:
-					above           (i, j, 9);
-					below           (i, j, 9);
-					left_and_right  (i, j, 9); break;
-				case gy:
-					above           (i, j, 1);
-					below           (i, j, 1);
-					left_and_right  (i, j, 1);
-					diagonally_above(i, j, 1);
-					diagonally_below(i, j, 1); break;
-			}
-		}
-	}
+	*pte=0; *cte=0;
 }
 
 int main() {
@@ -522,20 +537,7 @@ int main() {
 		cout<<"<POSITION "<<++game_count<<">"<<endl;
 		draw();  pop();
 		cout<<"<POSITION "<<++game_count<<">"<<endl;
-		draw();  gameRule();
-		/*pnaru();*/ cnaru();
-		cout<<"<COMPUTER'S MOVE>"<<endl;
-		for(int nr = 1; nr <= *cte; nr++) {
-			int k = cte[nr]/9/9/9/9;
-			int a = cte[nr]/9/9/9%9;
-			int b = cte[nr]/9/9%9;
-			int c = cte[nr]/9%9;
-			int d = cte[nr]%9;
-			cout<<setw(3)<<nr<<"."<<9-b<<a+1<<9-d<<c+1<<komaName(k)<<" ";
-			if(nr % 9 == 0) cout<<endl;
-		}
-		cout<<endl;
-		cop();
-		*pte=0; *cte=0;
+		draw(); cop();
+		game_count++;
 	}
 }
