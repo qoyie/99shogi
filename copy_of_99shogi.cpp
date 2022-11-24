@@ -84,8 +84,8 @@ int nariKind(int koma) {
 }
 
 int naru(int koma) {
-	int k=nariKind(koma);
-	return k?k:koma;
+	int k = nariKind(koma);
+	return k ? k : koma;
 }
 
 int unNaru(int koma) {
@@ -150,19 +150,25 @@ void draw() {
 		cout<<" "<<i+1<<endl;
 	}
 	cout<<"ckoma:";
-	for(int i=0,l=0; i<sizeof(ckoma)/sizeof(ckoma[0]); i++) {
-		string k=komaName(i+1);
-		for(int j=0; j<ckoma[i]; j++) {
+	for(int i = 0, l = 0; i < sizeof(ckoma)/sizeof(ckoma[0]); i++) {
+		string k = komaName(i+1);
+		for(int j = 0; j < ckoma[i]; j++) {
 			cout<<" "<<k;
-			if(++l == 10) { cout<<endl<<"      "; l=0; }
+			if(++l == 10) {
+				cout<<endl<<"      ";
+				l=0;
+			}
 		}
 	}
 	cout<<endl<<"pkoma:";
-	for(int i=0,l=0; i<sizeof(pkoma)/sizeof(pkoma[0]); i++) {
-		string k=komaName(i+1);
+	for(int i = 0, l = 0; i < sizeof(pkoma)/sizeof(pkoma[0]); i++) {
+		string k = komaName(i+1);
 		for(int j=0; j<pkoma[i]; j++) {
 			cout<<" "<<k;
-			if(++l == 10) { cout<<endl<<"      "; l=0; }
+			if(++l == 10) {
+				cout<<endl<<"      ";
+				l=0;
+			}
 		}
 	}
 	cout<<endl<<endl;
@@ -174,12 +180,14 @@ void moveto(int i, int j, int s, int ud, int rl) {
 	else if(isc(board(i)[j])) { t=cte; flag=-1; }
 	for(int k = 1; k <= s; k++) {
 		if((ud == -1 ? i-k >= 0 : ud == 1 ? i+k < 9 : true) &&
-		   (rl == -1 ? j-k >= 0 : rl == 1 ? j+k < 9 : true) && board(i+k*ud)[j+k*rl]*flag <= 0) {
+		   (rl == -1 ? j-k >= 0 : rl == 1 ? j+k < 9 : true) &&
+		   board(i+k*ud)[j+k*rl]*flag <= 0) {
 			sete(t,i+k*ud,j+k*rl);
 			if(board(i+k*ud)[j+k*rl]) break;
 		}else break;
 	}
 }
+
 void keTobi(int i, int j, int s) {
 	if(isp(board(i)[j]) && i-2>=0) {
 		if(j-1 >= 0 && board(i-2)[j-1] < 0) { sete(pte,i-2,j-1); }
@@ -190,6 +198,7 @@ void keTobi(int i, int j, int s) {
 		if(j+1 <= 9 && board(i+2)[j+1] > 0) { sete(cte,i+2,j+1); }
 	}
 }
+
 void above           (int i, int j, int s) { moveto(i, j, s,  1,  0); }
 void below           (int i, int j, int s) { moveto(i, j, s, -1,  0); }
 void left_and_right  (int i, int j, int s) { moveto(i, j, s,  0,  1);
@@ -203,7 +212,9 @@ int checkmove(int from_i,int from_j,int to_i,int to_j,int koma) {
 	int from_koma = board(from_i)[from_j];
 	int flag = from_koma > 0 ? 1 : -1;
 	from_koma = abs(from_koma);
-	if(from_koma != koma && nariKind(from_koma) != koma && !( flag==1 ? (from_i<3 || to_i<3) : (from_i>5 || to_i>5) ) ) {
+	if(from_koma != koma &&
+	   nariKind(from_koma) != koma &&
+	   !( flag==1 ? (from_i<3 || to_i<3) : (from_i>5 || to_i>5) ) ) {
 		cout<<"You can't naru "<<komaName(from_koma)<<" into "<<komaName(koma)<<"."<<endl;
 		return 0;
 	}
@@ -260,7 +271,7 @@ int checkmove(int from_i,int from_j,int to_i,int to_j,int koma) {
 				}
 				return 1;
 		}
-	} else if(from_i==to_i) {
+	} else if(from_i == to_i) {
 		int f = from_j<to_j ? 1 : -1;
 		if(abs(from_j-to_j) == 1) {
 			switch(koma) {
@@ -363,7 +374,7 @@ void cnaru() {
 
 void gameRule(int flag) {
 	for(int i = 0; i < 9; i++) {
-		for(int j =0; j < 9; j++) {
+		for(int j = 0; j < 9; j++) {
 			if(board(i)[j]*flag > 0) {
 				switch(abs(board(i)[j])) {
 					case fu:
@@ -384,13 +395,13 @@ void gameRule(int flag) {
 					case um:
 						above           (i, j, 1);
 						below           (i, j, 1);
-						left_and_right  (i, j, 1); /***breakthrough***/
+						left_and_right  (i, j, 1); /***FALLTHROUGH***/
 					case ka:
 						diagonally_above(i, j, 9);
 						diagonally_below(i, j, 9); break;
 					case ry:
 						diagonally_above(i, j, 1);
-						diagonally_below(i, j, 1); /***breakthrough***/
+						diagonally_below(i, j, 1); /***FALLTHROUGH***/
 					case hi:
 						above           (i, j, 9);
 						below           (i, j, 9);
@@ -430,8 +441,8 @@ void pop() {
 		c =  '9' - t[2];
 		d = t[3] -  '1';
 		k = t.substr(4,2);
-		if(a==9&&b==-1) {
-			int i=s2pKoma(k);
+		if(a==9 && b==-1) {
+			int i = s2pKoma(k);
 			if(!pkoma[i-1]){
 				cout<<k<<" was not found."<<endl;
 				continue;
@@ -439,9 +450,9 @@ void pop() {
 			switch(i){
 				case fu:
 					{
-						int f=0;
-						for(int i=a; i<81; i+=9) {
-							if(_board[i]==pfu) {
+						int f = 0;
+						for(int i = a; i < 81; i += 9) {
+							if(board[i](c) == pfu) {
 								cout<<"nifu"<<endl;
 								f=1;break;
 							}
@@ -449,7 +460,7 @@ void pop() {
 						if(f)continue;
 					}
 				case ke: case ky:
-					if(!c||i==ke&&c==1){
+					if(!c || i==ke && c==1){
 						cout<<k<<" won't be able to move.";
 						continue;
 					}
@@ -458,7 +469,7 @@ void pop() {
 				cout<<"invalid move."<<endl;
 				continue;
 			}
-			--pkoma[i-1];
+			pkoma[i-1]--;
 			return;
 		}
 		if(!checkmove(b, a, d, c, x=s2pKoma(k))) {
@@ -472,49 +483,48 @@ void pop() {
 }
 
 void cop() {
-	//gameRule();
 	cGameRule();
-	//pnaru();
 	cnaru();
 	cout<<"<COMPUTER'S MOVE>"<<endl;
 	for(int nr = 1; nr <= *cte; nr++) {
-		int k = cte[nr]/9/9/9/9;
-		int a = cte[nr]/9/9/9%9;
-		int b = cte[nr]/9/9%9;
-		int c = cte[nr]/9%9;
-		int d = cte[nr]%9;
+		int k = cte[nr] / 9 / 9 / 9 / 9;
+		int a = cte[nr] / 9 / 9 / 9 % 9;
+		int b = cte[nr] / 9 / 9 % 9;
+		int c = cte[nr] / 9 % 9;
+		int d = cte[nr] % 9;
 		cout<<setw(3)<<nr<<"."<<9-b<<a+1<<9-d<<c+1<<komaName(k)<<" ";
 		if(nr % 9 == 0) cout<<endl;
 	}
 	cout<<endl;
 	string t;
 	srand(time(0UL));
-	int sum=0;
-	for(int i=0;i < sizeof(ckoma)/sizeof(ckoma[0]); i++) {
-		sum+=ckoma[i];
+	int sum = 0;
+	for(int i = 0;i < sizeof(ckoma)/sizeof(ckoma[0]); i++) {
+		sum += ckoma[i];
 	}
-	int r = rand() % (*cte+sum);
+	int r = rand() % (*cte + sum);
 	if(r+1 <= *cte) {
-		int k = cte[r+1]/9/9/9/9;
-		int a = cte[r+1]/9/9/9%9;
-		int b = cte[r+1]/9/9%9;
-		int c = cte[r+1]/9%9;
-		int d = cte[r+1]%9;
+		int k = cte[r+1] / 9 / 9 / 9 / 9;
+		int a = cte[r+1] / 9 / 9 / 9 % 9;
+		int b = cte[r+1] / 9 / 9 % 9;
+		int c = cte[r+1] / 9 % 9;
+		int d = cte[r+1] % 9;
 		cout<<endl<<"White >"<<r+1<<"."<<9-b<<a+1<<9-d<<c+1<<komaName(k)<<endl;
 		cKoma(c, d, k);
 		board(a)[b] = emp;
 	} else while(true) {
 		int x = rand() % 567;
-		int i = x/9%9;
-		int j = x%9;
-		x =ckoma[x/9/9];
+		int i = x / 9 % 9;
+		int j = x % 9;
+		x = ckoma[x / 9 / 9];
 		switch(x) {
 			case fu:
 				{
-					int f=0;
-					for(int k=i; k<81; k+=9) {
-						if(_board[k]==cfu) {
-							f=1; break;
+					int f = 0;
+					for(int k = i; k < 81; k += 9) {
+						if(_board[k] == cfu) {
+							f=1;
+							break;
 						}
 					}
 					if(f) continue;
@@ -527,7 +537,8 @@ void cop() {
 			break;
 		}
 	}
-	*pte=0; *cte=0;
+	*pte=0;
+	*cte=0;
 }
 
 int main() {
@@ -535,9 +546,11 @@ int main() {
 	game_count = 0;
 	while(1) {
 		cout<<"<POSITION "<<++game_count<<">"<<endl;
-		draw();  pop();
+		draw();
+		pop();
 		cout<<"<POSITION "<<++game_count<<">"<<endl;
-		draw(); cop();
+		draw();
+		cop();
 		game_count++;
 	}
 }
