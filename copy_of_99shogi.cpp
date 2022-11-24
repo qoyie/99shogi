@@ -452,7 +452,7 @@ void pop() {
 					{
 						int f = 0;
 						for(int i = a; i < 81; i += 9) {
-							if(board[i](c) == pfu) {
+							if(board(i)[c] == pfu) {
 								cout<<"nifu"<<endl;
 								f=1;break;
 							}
