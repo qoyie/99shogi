@@ -209,6 +209,7 @@ void diagonally_below(int i, int j, int s) { moveto(i, j, s, -1,  1);
                                              moveto(i, j, s, -1, -1); }
 
 int checkmove(int from_i,int from_j,int to_i,int to_j,int koma) {
+	return 1;
 	int from_koma = board(from_i)[from_j];
 	int flag = from_koma > 0 ? 1 : -1;
 	from_koma = abs(from_koma);
