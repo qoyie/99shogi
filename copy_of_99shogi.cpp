@@ -483,6 +483,10 @@ void pop() {
 						continue;
 					}
 			}
+			if(board(c)[d]) {
+				cout<<"invalid move."<<endl;
+				continue;
+			}
 			if(!pKoma(d, c, i)) {
 				cout<<"invalid move."<<endl;
 				continue;
@@ -569,6 +573,5 @@ int main() {
 		cout<<"<POSITION "<<++game_count<<">"<<endl;
 		draw();
 		cop();
-		game_count++;
 	}
 }
