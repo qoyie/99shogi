@@ -209,26 +209,29 @@ void diagonally_below(int i, int j, int s) { moveto(i, j, s, -1,  1);
                                              moveto(i, j, s, -1, -1); }
 
 int checkmove(int from_i,int from_j,int to_i,int to_j,int koma) {
-	return 1;
 	int from_koma = board(from_i)[from_j];
 	int flag = from_koma > 0 ? 1 : -1;
 	from_koma = abs(from_koma);
 	if(from_koma != koma &&
-	   nariKind(from_koma) != koma &&
-	   !( flag==1 ? (from_i<3 || to_i<3) : (from_i>5 || to_i>5) ) ) {
+	   (nariKind(from_koma) != koma ||
+	   !( flag==1 ? (from_i<3 || to_i<3) : (from_i>5 || to_i>5) ) ) ) {
 		cout<<"You can't naru "<<komaName(from_koma)<<" into "<<komaName(koma)<<"."<<endl;
 		return 0;
 	}
 	koma = from_koma;
 	switch(koma) {
-		case to: case ny: case nk: case ng:
+		case to:
+		case ny:
+		case nk:
+		case ng:
 			koma = ki; break;
 		case ke:
 			if(to_i==4-3*flag) {
 				cout<<komaName(koma)<<" won't be able to move."<<endl;
 				return 0;
 			}
-		case fu: case ky:
+		case fu:
+		case ky:
 			if(to_i==4-4*flag) {
 				cout<<komaName(koma)<<" won't be able to move."<<endl;
 				return 0;
@@ -243,13 +246,15 @@ int checkmove(int from_i,int from_j,int to_i,int to_j,int koma) {
 		if(f != flag) {
 			if(from_i-to_i == flag) {
 				switch(koma) {
-					case fu: case gi: return 1;
+					case fu:
+					case gi:
+						return 1;
 				}
 			}
 			if(koma == ky) {
 				for(int i = from_i+f; i != to_i; i+=f) {
 					if(board(i)[from_j]) {
-						cout<<"You can't move via koma."<<endl;
+						cout<<"You can't move over koma."<<endl;
 						return 0;
 					}
 				}
@@ -258,15 +263,18 @@ int checkmove(int from_i,int from_j,int to_i,int to_j,int koma) {
 		}
 		if(abs(from_i-to_i) == 1) {
 			switch(koma) {
-				case ki: case um: case gy:
+				case ki:
+				case um:
+				case gy:
 					return 1;
 			}
 		}
 		switch(koma) {
-			case hi: case ry:
+			case hi:
+			case ry:
 				for(int i = from_i+f; i != to_i; i+=f) {
 					if(board(i)[from_j]) {
-						cout<<"You can't move via koma."<<endl;
+						cout<<"You can't move over koma."<<endl;
 						return 0;
 					}
 				}
@@ -276,48 +284,57 @@ int checkmove(int from_i,int from_j,int to_i,int to_j,int koma) {
 		int f = from_j<to_j ? 1 : -1;
 		if(abs(from_j-to_j) == 1) {
 			switch(koma) {
-				case ki: case um: case gy:
+				case ki:
+				case um:
+				case gy:
 					return 1;
 			}
 		}
 		switch(koma) {
-			case hi: case ry:
+			case hi:
+			case ry:
 				for(int j = from_j+f; j != to_j; j+=f) {
 					if(board(from_i)[j]) {
-						cout<<"You can't move via koma."<<endl;
+						cout<<"You can't move over koma."<<endl;
 						return 0;
 					}
 				}
 				return 1;
 		}
 	} else if(abs(from_i-to_i) == abs(from_j-to_j)) {
-		if(abs(from_i-to_j) == 1) {
-			if(koma == ki && to_i-from_i == flag) {
-				cout<<"Move mismatch.";
-				return 0;
+		if(abs(from_i-to_i) == 1) {
+			if(from_i-to_i == flag) {
+				switch(koma){
+					case ki:
+						return 1;
+				}
 			}
 			switch(koma){
-				case gi: case ki: case ry:
+				case gi:
+				case ry:
+				case gy:
 					return 1;
 			}
 		}
 		switch(koma){
-			case ka: case um:
+			case ka:
+			case um:
 				int fi = from_i<to_i ? 1 : -1;
 				int fj = from_j<to_j ? 1 : -1;
 				for(int i = from_i+fi, j = from_j+fj; i != to_i; i+=fi, j+=fj){
 					if(board(i)[j]) {
-						cout<<"You can't move via koma."<<endl;
+						cout<<"You can't move over koma."<<endl;
 						return 0;
 					}
 				}
 				return 1;
 		}
 	} else {
-		return koma==ke &&
-		       abs(from_i-to_i)==2 &&
-		       abs(from_j-to_j)==1 &&
-		       ( (from_i>to_i) == (flag==1) );
+		return
+			koma==ke &&
+			abs(from_i-to_i)==2 &&
+			abs(from_j-to_j)==1 &&
+			( (from_i>to_i) == (flag==1) );
 	}
 	cout<<"Move mismatch."<<endl;
 	return 0;
@@ -442,7 +459,7 @@ void pop() {
 		c =  '9' - t[2];
 		d = t[3] -  '1';
 		k = t.substr(4,2);
-		if(a==9 && b==-1) {
+		if(a==('9' - 'M') && b==('+' - '1')) {
 			int i = s2pKoma(k);
 			if(!pkoma[i-1]){
 				cout<<k<<" was not found."<<endl;
@@ -534,7 +551,7 @@ void cop() {
 				if(i==8||x==ka&&i==7) continue;
 		}
 		if(cKoma(i, j, x)) {
-			cout<<endl<<"White >"<<"M"<<"+"<<9-j<<i+1<<komaName(x)<<endl;
+			cout<<endl<<"White >"<<"M"<<"-"<<9-j<<i+1<<komaName(x)<<endl;
 			break;
 		}
 	}
